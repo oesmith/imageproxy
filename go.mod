@@ -12,6 +12,7 @@ require (
 	github.com/gomodule/redigo v1.8.9
 	github.com/gorilla/mux v1.8.0
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79
+	github.com/jdeng/goheif v0.0.0-20200323230657-a0d6a8b3e68f
 	github.com/muesli/smartcrop v0.3.0
 	github.com/peterbourgon/diskv v0.0.0-20171120014656-2973218375c3
 	github.com/prometheus/client_golang v1.16.0

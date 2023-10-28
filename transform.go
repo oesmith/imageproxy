@@ -15,6 +15,7 @@ import (
 	"math"
 
 	"github.com/disintegration/imaging"
+	"github.com/jdeng/goheif" // register heif format
 	"github.com/muesli/smartcrop"
 	"github.com/muesli/smartcrop/nfnt"
 	"github.com/prometheus/client_golang/prometheus"
@@ -58,8 +59,17 @@ func Transform(img []byte, opt Options) ([]byte, error) {
 		}
 	}
 
-	// encode webp and tiff as jpeg by default
-	if format == "tiff" || format == "webp" {
+	// apply EXIF orientation for heic source images.
+	if format == "heic" {
+		if b, err := goheif.ExtractExif(bytes.NewReader(img)); err == nil {
+			if exifOpt := exifOrientation(bytes.NewReader(b)); exifOpt.transform() {
+				m = transformImage(m, exifOpt)
+			}
+		}
+	}
+
+	// encode heic, webp and tiff as jpeg by default
+	if format == "tiff" || format == "webp" || format == "heic" {
 		format = "jpeg"
 	}
 
